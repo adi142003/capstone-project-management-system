@@ -1,2 +1,2 @@
 # capstone-project-management-system
-final year project management system
+The Capstone Management System (CMS) is a user-friendly platform designed to simplify the management of capstone projects in academic institutions. With an easy-to-navigate interface, it allows students and faculty to propose, track, and complete projects seamlessly. The system features collaborative workspaces, progress tracking, and communication tools, fostering teamwork and efficient project evaluation. FYCMS also ensures secure data management and integrates smoothly with existing academic systems. Streamlining the entire process, CMS empowers students and faculty to focus on project success while enhancing the overall capstone experience.
