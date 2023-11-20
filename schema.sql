@@ -78,9 +78,9 @@ drop table if exists grade;
 create table grade (
 team_id int primary key, 
 project_id int, 
-phase1_grade varchar(2), 
-phase2_grade varchar(2), 
-phase3_grade varchar(2)
+phase1 varchar(2), 
+phase2 varchar(2), 
+phase3 varchar(2)
 );
 
 
@@ -139,6 +139,20 @@ END $$
 
 DELIMITER ;
 
+DELIMITER $$
+CREATE FUNCTION UpdateProjectDescription(p_project_id INT, p_description TEXT) RETURNS BOOLEAN
+deterministic
+BEGIN
+    DECLARE rows_affected INT;
+    
+    UPDATE Project SET description = p_description WHERE project_id = p_project_id;
+    GET DIAGNOSTICS rows_affected = ROW_COUNT;
+    
+    RETURN rows_affected > 0;
+END$$
+DELIMITER ;
+
+
 
 
 -- Users Data
@@ -153,7 +167,12 @@ INSERT INTO Project (project_id, problem_statement, description, start_date, sub
 (2, 'Smart Home Automation', 'Create an intelligent system for automating home tasks and processes.', '2022-02-05', '2022-05-05'),
 (3, 'Green Energy Solutions', 'Design eco-friendly solutions for energy conservation and renewable energy.', '2022-03-20','2022-05-05'),
 (4, 'Healthcare Management System', 'Develop a comprehensive system for managing healthcare information and services.', '2022-04-15','2022-06-04'),
-(5, 'E-commerce Platform', 'Build an advanced e-commerce platform with innovative features.', '2022-05-30', '2022-08-30');
+(5, 'E-commerce Platform', 'Build an advanced e-commerce platform with innovative features.', '2022-05-30', '2022-08-30'),
+(6, 'Autonomous Drone Delivery', 'Implement a drone delivery system for efficient and autonomous package delivery.', '2022-06-15', '2022-09-15'),
+(7, 'Augmented Reality Gaming', 'Create an augmented reality gaming experience with interactive and immersive features.', '2022-07-10', '2022-10-10'),
+(8, 'Smart Traffic Management', 'Develop an intelligent system for optimizing traffic flow and reducing congestion in urban areas.', '2022-08-25', '2022-11-25'),
+(9, 'Blockchain-based Voting System', 'Design a secure and transparent voting system using blockchain technology.', '2022-09-20', '2022-12-20'),
+(10, 'AI-Powered Personal Assistant', 'Build a virtual assistant using artificial intelligence to help users with daily tasks and information.', '2022-10-15', '2023-01-15');
 
 -- Department Data
 INSERT INTO Department (department_name, no_of_faculty, chairperson) VALUES
@@ -179,8 +198,13 @@ INSERT INTO Team (team_id, no_of_girls, no_of_boys, project_id, faculty_id) VALU
 (1, 2, 3, 1, 101),
 (2, 3, 2, 2, 102), 	
 (3, 1, 4, 3, 103),
-(4, 4, 1, 4, 104),
-(5, 2, 3, 5, 105);
+(4, 4, 1, 4, 101),
+(5, 2, 3, 5, 105),
+(6, 3, 2, 6, 106),
+(7, 2, 4, 7, 107),
+(8, 4, 1, 8, 108),
+(9, 1, 5, 9, 109),
+(10, 3, 2, 10, 110);
 
 -- Student Data
 INSERT INTO Student (SRN, fname, lname, cgpa, date_of_birth, team_id, department_name, email) VALUES
@@ -193,7 +217,17 @@ INSERT INTO Student (SRN, fname, lname, cgpa, date_of_birth, team_id, department
 (123462, 'Daniel', 'Anderson', 9.12, '1998-07-12', 1, 'Computer Science', 'daniel.anderson@example.com'),
 (123463, 'Olivia', 'Davis', 7.88, '1999-01-18', 2, 'Electrical Engineering', 'olivia.davis@example.com'),
 (123464, 'Liam', 'Moore', 8.75, '1997-06-22', 3, 'Mechanical Engineering', 'liam.moore@example.com'),
-(123465, 'Emma', 'Wilson', 7.65, '1998-10-07', 1, 'Computer Science', 'emma.wilson@example.com');
+(123465, 'Emma', 'Wilson', 7.65, '1998-10-07', 1, 'Computer Science', 'emma.wilson@example.com'),
+(123466, 'Ava', 'Jones', 8.42, '1998-03-12', 4, 'Electrical Engineering', 'ava.jones@example.com'),
+(123467, 'Noah', 'Thomas', 7.98, '1999-09-28', 4, 'Mechanical Engineering', 'noah.thomas@example.com'),
+(123468, 'Mia', 'Taylor', 8.87, '1997-12-05', 5, 'Computer Science', 'mia.taylor@example.com'),
+(123469, 'James', 'White', 7.75, '1998-06-18', 5, 'Electrical Engineering', 'james.white@example.com'),
+(123470, 'Isabella', 'Clark', 9.05, '1999-04-02', 6, 'Mechanical Engineering', 'isabella.clark@example.com'),
+(123471, 'William', 'Hill', 8.15, '1997-11-15', 7, 'Computer Science', 'william.hill@example.com'),
+(123472, 'Avery', 'Baker', 7.92, '1998-08-20', 6, 'Electrical Engineering', 'avery.baker@example.com'),
+(123473, 'Ethan', 'Fisher', 8.98, '1999-05-10', 6, 'Mechanical Engineering', 'ethan.fisher@example.com'),
+(123474, 'Scarlett', 'Moore', 7.83, '1997-10-25', 8, 'Computer Science', 'scarlett.moore@example.com'),
+(123475, 'Lucas', 'Hall', 8.54, '1998-04-08', 8, 'Electrical Engineering', 'lucas.hall@example.com');
 
 -- Student Interests Data
 INSERT INTO Student_interests (interests, SRN) VALUES
@@ -233,5 +267,3 @@ INSERT INTO Faculty_field_of_interest (field_of_interest, faculty_id) VALUES
 ('Cybersecurity', 103),
 ('Database Management', 104),
 ('Programming Languages', 105);
-
-
