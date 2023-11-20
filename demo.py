@@ -63,6 +63,7 @@ elif page == "Login":
             user_data = cursor.fetchone()
 
             if user_data:
+                #login successful
                 st.success("Login Successful!")
                 st.sidebar.success(f"Logged in as {username}")
                 st.session_state.logged_in = True
